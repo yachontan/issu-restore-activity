@@ -10,18 +10,20 @@ import dotelnet
 
 #read csv and put into host_list[]
 lineinput = input("Input Telnet list file .csv:")
-csv_list = read_file.csv_read(lineinput)
-print(csv_list)
+telnet_list = read_file.csv_read(lineinput)
+print(telnet_list)
+
 
 lineinput = "show.txt"
-txt_list = read_file.txt_read(lineinput)
-print(txt_list)
+show_list = read_file.txt_read(lineinput)
+print(show_list)
 
 #telnet from i of host_list
-i = []
-for i in csv_list:
-#    if i > 1:
-  print(i)
+f = []
+#for i in range(len(csv_list)):
+#for i in range(len(csv_list)) :
+#  if i > 1:
+#    print(i)
 #    dotelnet.main(i[0],i[1],i[2],i[3],i[4])
     
     
