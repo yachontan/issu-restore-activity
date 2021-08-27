@@ -19,10 +19,6 @@ def csv_read(csv_contents):
 def txt_read(txt_contents):
     txt_list = []
     f = open(txt_contents)
-    for row in f:
-     txt_list = f.read().splitlines()
+    txt_list = f.read().splitlines()
     f.close()
     return txt_list
-
-
-

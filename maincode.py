@@ -5,6 +5,7 @@ import datetime
 import telnetlib
 import read_file
 import dotelnet
+#import prompt
 
 # Check csv file is exist
 
@@ -25,15 +26,7 @@ for i in range(len(telnet_list)):
   show_list = telnet_list[i][6]
   target_ios = telnet_list[i][7]
   tftp_server = telnet_list[i][8]
-  #Connect telnet
-  tn = telnetlib.Telnet(ip,port,600)
-  print(tn)
-  tn.interact()
-  
-  # Close telnet
-  tn.close()
 
 # Example to make a list[] from txt
-# lineinput = "show.txt"
-# show_list = read_file.txt_read(lineinput)
-# print(show_list)
+parameter = read_file.txt_read(show_list)
+print(parameter)
