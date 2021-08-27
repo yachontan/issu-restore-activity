@@ -26,18 +26,6 @@ for i in range(len(telnet_list)):
   show_list = telnet_list[i][6]
   target_ios = telnet_list[i][7]
   tftp_server = telnet_list[i][8]
-  print(ip)
-  print(port)
-  print(tftp_server)
-
-  #Connect telnet
-  #parameter = prompt. 
-  #tn = telnetlib.Telnet(ip,port,600)
-  #print(tn)
-  #tn.interact()
-  
-  # Close telnet
-  #tn.close()
 
 # Example to make a list[] from txt
 parameter = read_file.txt_read(show_list)
