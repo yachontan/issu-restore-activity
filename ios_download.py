@@ -84,7 +84,7 @@ def dwnld(ip,port,Username,file_path,tftp_server_ip,tn):
 
                 elif file_name.encode('ascii') in output_dir:
                     print("the target file exists in this device.")
-                    tn.write(b"dele bootflash:test.txt")
+                    #tn.write(b"dele bootflash:test.txt")
                     tn.write(b"\n")
                     tn.write(b"\n")
                     break
