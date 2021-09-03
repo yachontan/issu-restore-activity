@@ -2,9 +2,6 @@ import datetime
 import read_file
 
 def output_show(ip,port,show_list,tn):
-
-    dt_now = datetime.datetime.now()
-    log_output = ip + "_" + port + "_" + dt_now.strftime('%Y%m%d-%H%M%S-%f') + "_" + "show_result.txt"
     
     print("Commands in '", show_list,"' will be issued.")
     command_list = read_file.txt_read(show_list)
@@ -27,6 +24,9 @@ def output_show(ip,port,show_list,tn):
     tn.write(b"\n")
     tn.read_until(b"#")
     
+    # Make output file and write output in it
+    dt_now = datetime.datetime.now()
+    log_output = ip + "_" + port + "_" + dt_now.strftime('%Y%m%d-%H%M%S-%f') + "_" + "show_result.txt"
     f_log = open(log_output,mode="w", newline="", encoding="ms932")
     f_log.write("\n---- (telnet " + ip + " : " + port +") ----\n")
     f_log.write(output)
@@ -38,9 +38,6 @@ def output_show(ip,port,show_list,tn):
 
 def input_conf(ip,port,config_list,tn):
     
-    dt_now = datetime.datetime.now()
-    log_output = ip + "_" + port + "_" + dt_now.strftime('%Y%m%d-%H%M%S-%f') + "_" + "config_result.txt"
-
     print("Commands in '", config_list,"' will be issued.")
     command_list = read_file.txt_read(config_list)
 
@@ -62,6 +59,9 @@ def input_conf(ip,port,config_list,tn):
     tn.write(b"\n")
     tn.read_until(b"#")
     
+    # Make output file and write output in it
+    dt_now = datetime.datetime.now()
+    log_output = ip + "_" + port + "_" + dt_now.strftime('%Y%m%d-%H%M%S-%f') + "_" + "config_result.txt"
     f_log = open(log_output,mode="w", newline="", encoding="ms932")
     f_log.write("\n---- (telnet " + ip + " : " + port +") ----\n")
     f_log.write(output)
