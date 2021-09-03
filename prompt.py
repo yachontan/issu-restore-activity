@@ -1,147 +1,77 @@
 import sys
 import telnetlib
 
-#Telent
-
-#TELNET_HOST = "10.71.140.56"
-#TELNET_PORT = "2030"
-
-def enable(TELNET_HOST, TELNET_PORT):
+def enable(ip,port,username,telnet_password,enable_password,tn):
+    #tn = telnetlib.Telnet(ip,port)
 
     try:
-        tn = telnetlib.Telnet(TELNET_HOST, TELNET_PORT)
-    #    f_log.write("\n---- " + HOST_NAME + "( telnet " + TELNET_HOST + " " + TELNET_PORT +" ) ----\n")
+        #tn = telnetlib.Telnet(ip,port)
         tn.write(b"\r")
         tn.write(b"\r")
         tn.write(b"\r\n")
-    #    tn.write(b"conf" + b" " + b"t")
         tn.write(b"\n")
-    #    tn.write(b"hostname RRR")
         tn.write(b"\n")
 
 
         try:
-            print("Waiting for prompt")
+            print("Waiting for prompt...")
             prompt_def = tn.read_until(b">", 3)
         except EOFError as e:
             print("Connection closed: %s") % e
 
 
         if b">" in prompt_def:
-        #1
-        #Router>
-        #-> execute “en”
-            #A
+            print("Going to privileged EXEC mode...")
             tn.write(b"enable" + b"\n")
             prompt_en = tn.read_until(b"#",3)
-            print("enable command is executed") #消す予定
 
             if b"#" in prompt_en:
-                print("Done: Moved to privileged EXEC mode successfully!!!")
-                #tn.write(b"exit")    #消す予定
+                print("Done: Got to privileged EXEC mode successfully!!!")
 
             elif b"Password" in prompt_en:
-            #    1-b
-            #    Password:
-            #    -> input password
-                #for i in range(3,1):
-                #    i = i - 1
-                i = 3
-                print("Input enable password" + "  (" + str(i) + " times left) >")
-                #B
-                while b"Password" in prompt_en:
-                    en_pwd = sys.stdin.readline() #パスワード入力プロンプト
-                    i = i - 1
-                    tn.write(en_pwd.encode('ascii') + b"\n")
-                    prompt_en_pwd = tn.read_until(b"#",2)
-                    print("Inputed the password.")  #消す予定
-                #    print(i)
+                print("Going to privileged EXEC mode...")
+                print("Getting password for privileged EXEC mode...")
+                tn.write(enable_password.encode('ascii') + b"\n")
+                prompt_en_pwd = tn.read_until(b"#",2)
 
-                    if b"#" in prompt_en_pwd:
-                #        1-b-1
-                #        Router#
-                #        -> OK
-                        print("Done: Moved to privileged EXEC mode successfully!!!")
-                        tn.write(b"exit")    #消す予定
-                        break
+                if b"#" in prompt_en_pwd:
+                    print("Done: Got to privileged EXEC mode successfully!!!")
 
+                elif b"Password" in prompt_en_pwd:
+                    print('Error: Password is incorrect and refused, please coreect the password.')
 
-                    elif b"Password" in prompt_en_pwd:
-                        #for i in range(1,3):
-                    #        1-b-2
-                    #        Password:
-                    #        -> input pass again
-                        if i == 1:
-                            print("Error: Password is incorrect...\n" + "Input enable password correctly" + "  (" + str(i) + " time left) > ")
-                            continue
-                            #Bに戻る
-
-                        else:
-                            print("Error: Password is incorrect...\n" + "Input enable password correctly" + "  (" + str(i) + " times left) > ")
-                            continue
-
-                    else:
-                        print("Error: Incorrest password was entered 3 times and refused, run the process again.")
-                    #        1-b-3
-                    #        % Bad passwords
-                    #        -> print (Try again) and back to 1
-                        break
-                         #Aに戻る or 終了させる。
-
-            #     else:
-            #         pass
-                #        print("xxxxxx")
-                #ケースが思いつかない。なければ、No Action.
-
-
-
-
+                else:
+                    print('Error: Terminal is too busy, fix your router to run the process.')
 
         elif b")#" in prompt_def:
-        #3
-        #Router(xx)#
-        #-> execute “end”
+            print('Going back to privileged EXEC mode...')
             tn.write(b"end")
             prompt_end = tn.read_until(b"#",3)
-            print("end command is executed")    #消す予定
-
-
 
             if b")#" in prompt_end:
               print('Error: Terminal is too busy, fix your router to run the process.')
 
-
             elif b"#" in prompt_end:
-              #   3-a
-              #   Router#
-              #   -> O
-              print('Done: Moved to privileged EXEC mode successfully!!!')
+              print('Done: Got back to privileged EXEC mode successfully!!!')
 
             else:
-              #   3-b
-              #   other
-              #-> print (Terminal is too busy,Fix your router to run the process.)
               print('Error: Terminal is too busy, fix your router to run the process.')
 
-
-
-
         elif b"#" in prompt_def:
-            print('Done: Moved to privileged EXEC mode successfully!!!')
-            tn.write(b"exit")   #消す予定
+            print("Done: In privileged EXEC mode NOW")
 
         elif b"%" in prompt_def:
-            prinit("%%%%")
+            prinit("%%%%%ERROR%%%%%")
             tn.write(b"\r\n")
 
         else:
-        #4
-        #other
-        #-> print (Terminal is too busy,Fix your router to run the process.)
             print('Error: Terminal is too busy, fix your router to run the process.')
             tn.write(b"\r\n")
             tn.write(b"\r")
             tn.write(b"\n")
+
+
+
 
     except EOFError:
         print("Connection closed by EOFError...")
