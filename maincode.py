@@ -5,6 +5,10 @@ import datetime
 import telnetlib
 import read_file
 import dotelnet
+import prompt
+import ios_download
+
+
 #import prompt
 
 # Check csv file is exist
@@ -27,6 +31,21 @@ for i in range(len(telnet_list)):
   target_ios = telnet_list[i][7]
   tftp_server = telnet_list[i][8]
 
+  tn = telnetlib.Telnet(ip,port)
+  prompt.enable(ip,port,Username,tel_password,en_password,tn)
+  ios_download.dwnld(ip,port,en_password,target_ios,tftp_server,tn)
+
+#print("dummy2")
 # Example to make a list[] from txt
 parameter = read_file.txt_read(show_list)
 print(parameter)
+
+
+
+
+
+#dotelnet.main(ip,port,Username,tel_password,en_password)
+
+#prompt.enable(ip,port,Username,tel_password,en_password,tn)
+
+#ios_download.dwnld(ip,port,en_password,target_ios,tftp_server)

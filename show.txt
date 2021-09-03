@@ -1,4 +1,0 @@
-sh run
-sh ver
-sh int
-sh tech-support
