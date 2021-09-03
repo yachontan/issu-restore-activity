@@ -4,9 +4,10 @@ import sys
 import datetime
 import telnetlib
 import read_file
-import dotelnet
+#import dotelnet
 import prompt
 import ios_download
+import command
 
 
 #import prompt
@@ -34,11 +35,17 @@ for i in range(len(telnet_list)):
   tn = telnetlib.Telnet(ip,port)
   prompt.enable(ip,port,Username,tel_password,en_password,tn)
   ios_download.dwnld(ip,port,en_password,target_ios,tftp_server,tn)
+  command.output_show(ip,port,show_list,tn)
+  command.input_conf(ip,port,config_list,tn)
+  command.output_show(ip,port,show_list,tn)
+  
+
+
 
 #print("dummy2")
 # Example to make a list[] from txt
-parameter = read_file.txt_read(show_list)
-print(parameter)
+#parameter = read_file.txt_read(show_list)
+#print(parameter)
 
 
 
