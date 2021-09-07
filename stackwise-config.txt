@@ -1,0 +1,10 @@
+stackwise-virtual
+domain 100
+
+int range Fo 2/0/19 - 24
+stackwise-virtual link 1
+!
+int range twe 1/0/47-48
+stackwise-virtual dual-active-detection
+!
+

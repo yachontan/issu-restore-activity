@@ -1,5 +1,2 @@
 Host IP,Telnet port,Username,Telnet password, Enable password,config_file,show_file,Terget IOS-XE version,TFTP server 
-10.71.140.56,2006,,,cisco,config.txt,show.txt,17.3.2.bin,10.71.136.1
-10.71.140.56,2031,,,cisco,config.txt,show.txt,17.3.2.bin,10.71.136.1
-10.71.140.56,2030,,,cisco,config.txt,show.txt,17.3.2.bin,10.71.136.1
-10.71.140.56,2027,,,cisco,config.txt,show.txt,17.3.2.bin,10.71.136.1
+10.71.140.56,2006,,,cisco,stackwise-config.txt,show.txt,yatogash/cat9k_iosxe.17.03.02a.SPA.bin,10.71.136.1
