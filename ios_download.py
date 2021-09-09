@@ -1,6 +1,7 @@
 import sys
 import telnetlib
 import os
+import time
 
 
 def dwnld(ip,port,Username,file_path,tftp_server_ip,tn):
@@ -27,7 +28,7 @@ def dwnld(ip,port,Username,file_path,tftp_server_ip,tn):
                     print("Finding out " + "\"" + file_name + "\"" + " in flash...")
                     #guruguru.spinner_gen()
                     tn.write(b"dir " + file_name.encode('ascii') + b"\n")
-                    output_dir = tn.read_until(b"No such file", 3)
+                    output_dir = tn.read_until(b"No such file",2)
 
                 #    print(output_dir.decode('ascii'))
                 except EOFError as e:
@@ -38,7 +39,7 @@ def dwnld(ip,port,Username,file_path,tftp_server_ip,tn):
                     print("Checking reachability to TFTP Server in progress...")
                     tn.write(b"ping " + b"vrf Mgmt-vrf " + tftp_server_ip.encode('ascii') + b"\n")
                     tn.read_until(tftp_server_ip.encode('ascii'))
-                    output_ping = tn.read_until(b"!!!!!",5)
+                    output_ping = tn.read_until(b"!!!!!",3)
 
 
                     if b"!!!!!" in output_ping:
@@ -47,23 +48,38 @@ def dwnld(ip,port,Username,file_path,tftp_server_ip,tn):
 
                         if b"bootflash:" in output_dir:
                             tn.write(b"copy tftp: bootflash:" + b" " + b"vrf Mgmt-vrf" + b"\n")
-                            tn.read_until(b"Address or name of remote host",2)
+                            tn.read_until(b"Address or name of remote host")
                             tn.write(tftp_server_ip.encode('ascii') + b"\n")
-                            tn.read_until(b"Source filename",2)
+                            tn.read_until(b"Source filename")
                             tn.write(file_path.encode('ascii') + b"\n")
-                            tn.read_until(b"Destination filename",2)
-                            tn.write(b"\n")
+                            tn.read_until(b"Destination filename")
+                            #tn.write(b"\n")
                             tn.write(b"\n")
                             tn.read_until(b"?",2)
                             checking_accessing = tn.read_until(file_name.encode('ascii') + b"...", 3)
+                            checking_loading = tn.read_until(file_name.encode('ascii') + b" from " + tftp_server_ip.encode('ascii'))
+                            #eTaxMac.dmg from 10.71.136.1
                             print(checking_accessing.decode('ascii'))
+                            print(checking_loading.decode('ascii') + "\n")
                             tn.write(b"\n")
                             tn.write(b"\n")
                             tn.write(b"\n")
-                            output_copy = tn.read_until(b'[OK',2)
-                            #sample.main()
-                            if b'[OK' in output_copy:
-                                print('Downloaded successfully!!!')
+                            ###tn.read_until(b":")
+
+
+                            while True:
+                                progress_log = tn.read_until(b'!',1)
+                                ###progress_log = tn.read_some()
+                                if b"!" in progress_log:
+                                    print("!", end='', flush=True)
+                                    continue
+                                else:
+                                    print('break')
+                                    break
+
+
+                            if b'[OK' in progress_log:
+                                print('\n' + '...Downloaded successfully' + "\n")
                                 continue
 
                             else:
@@ -84,7 +100,8 @@ def dwnld(ip,port,Username,file_path,tftp_server_ip,tn):
 
                 elif file_name.encode('ascii') in output_dir:
                     print("the target file exists in this device.")
-                    #tn.write(b"dele bootflash:test.txt")
+                    #tn.write(b"dele bootflash:Cyberduck-7.9.2.34986.zip")
+                    tn.write(b"dele bootflash:eTaxMac.dmg")
                     tn.write(b"\n")
                     tn.write(b"\n")
                     break
