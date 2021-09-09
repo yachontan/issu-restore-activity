@@ -101,7 +101,7 @@ def dwnld(ip,port,Username,file_path,tftp_server_ip,tn):
                 elif file_name.encode('ascii') in output_dir:
                     print("the target file exists in this device.")
                     #tn.write(b"dele bootflash:Cyberduck-7.9.2.34986.zip")
-                    tn.write(b"dele bootflash:eTaxMac.dmg")
+                    #tn.write(b"dele bootflash:eTaxMac.dmg")
                     tn.write(b"\n")
                     tn.write(b"\n")
                     break
