@@ -18,7 +18,7 @@ def set_telnet_log_name(ip,port,title):
     log_name = ip + "_" + port + "_" + get_time_file() + "_" + title + ".txt"
     return log_name
 
-def output_telnet_log(log_name,log_output):
+def telnet_log(log_name,log_output):
     f = open(log_name, mode='a', newline="", encoding="ms932")
     if "#" in log_output:
         f.write(str(log_output))
