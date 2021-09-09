@@ -1,4 +1,5 @@
 sh run
 sh ver
-sh int
-sh tech-support
+sh int status
+sh stackwise-virtual
+sh boot

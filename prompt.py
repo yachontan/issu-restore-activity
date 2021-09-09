@@ -61,7 +61,7 @@ def enable(ip,port,username,telnet_password,enable_password,tn):
             print("Done: In privileged EXEC mode NOW")
 
         elif b"%" in prompt_def:
-            prinit("%%%%%ERROR%%%%%")
+            print("%%%%%ERROR%%%%%")
             tn.write(b"\r\n")
 
         else:
