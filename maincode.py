@@ -41,4 +41,7 @@ for i in range(len(telnet_list)):
   command.output_show(ip,port,show_list,tn)
   command.input_conf(ip,port,config_list,tn)
   command.output_show(ip,port,show_list,tn)
+
+  print("Done:"+ ip +"-"+ port +". Close Telnet port...")
+  tn.close()
   
