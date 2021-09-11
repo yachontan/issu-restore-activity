@@ -8,13 +8,14 @@ import prompt
 import ios_download
 import command
 import ios_downgrade
+import check_swv_role
 
 
 #import prompt
 # Check csv file is exist
 
 
-# Read csv and put into host_list[]  
+# Read csv and put into host_list[]
 lineinput = input("Input Telnet list file .csv:")
 telnet_list = read_file.csv_read(lineinput)
 print(telnet_list)
@@ -34,14 +35,12 @@ for i in range(len(telnet_list)):
   tftp_server = telnet_list[i][8]
 
   tn = telnetlib.Telnet(ip,port,900)
+  check_swv_role.check_role(ip,port,tn)
   prompt.enable(ip,port,Username,tel_password,en_password,tn)
   ios_download.dwnld(ip,port,en_password,target_ios,tftp_server,tn)
   ios_downgrade.dwngrd(ip,port,target_ios,en_password,tn)
   prompt.enable(ip,port,Username,tel_password,en_password,tn)
-  command.output_show(ip,port,show_list,tn)
   command.input_conf(ip,port,config_list,tn)
-  command.output_show(ip,port,show_list,tn)
 
   print("Done:"+ ip +"-"+ port +". Close Telnet port...")
   tn.close()
-  
